@@ -1,0 +1,19 @@
+@import '../styles';
+
+header {
+    background-color: $white;
+    .container {
+        nav {
+            padding: 2rem 0 .5rem 0;
+            .nav-logo {
+                img {
+                    transition: 80ms ease;
+                    &:hover {
+                        cursor: pointer;
+                        transform: scale(1.015);
+                    }
+                }
+            }
+        }
+    }
+}

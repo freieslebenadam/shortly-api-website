@@ -1,0 +1,26 @@
+@import '../styles';
+
+a.button,
+button.button {
+    border: none;
+    display: inline-block;
+    padding: .8rem 1rem;
+    background-color: $cyan;
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+    width: 100%;
+    text-align: center;
+    font-size: 1.1em;
+    transition: 100ms ease;
+    &:hover {
+        cursor: pointer;
+        filter: brightness(1.1);
+    }
+    &.round {
+        border-radius: 2rem;
+    }
+    &.soft {
+        border-radius: .5rem;
+    }
+}

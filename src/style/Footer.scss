@@ -1,0 +1,106 @@
+@import '../styles';
+
+.get-started {
+    background-color: $dark-violet;
+    background-image: url(../images/bg-boost-mobile.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    padding: 5rem 0;
+    h1 {
+        text-align: center;
+        color: $white;
+        font-size: 1.6em;
+        padding-bottom: 1rem;
+    }
+    .button-wrapper {
+        width: 60%;
+        margin: 0 auto;
+    }
+}
+
+.footer {
+    background-color: $darker-violet;
+    color: $gray;
+    text-align: center;
+    padding: 2rem 0;
+    img {
+        padding: 1rem 0;
+        transition: 100ms ease;
+        &:hover {
+            transform: scale(1.015);
+            cursor: pointer;
+        }
+    }
+    ul {
+        list-style: none;
+    }
+    .links {
+        h3 {
+            color: $white;
+            font-weight: 700;
+            font-size: 1em;
+            padding-top: 1rem;
+        }
+        li {
+            padding-top: .5rem;
+            a {
+                text-decoration: none;
+                transition: 100ms ease;
+                &:hover {
+                    color: $cyan;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+    .social {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        padding: 3rem 0 1rem 0;
+        li {
+            padding: .25rem .75rem;
+            i {
+                font-size: 1.5em;
+                color: $white;
+                transition: 100ms ease;
+                &:hover {
+                    color: $cyan;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .get-started {
+        background-image: url(../images/bg-boost-desktop.svg);
+        h1 {
+            font-size: 2.25em;
+            margin-bottom: 1rem;
+        }
+        .button-wrapper {
+            width: 25%;
+        }
+    }
+    .footer {
+        .container {
+            display: flex;
+            flex-direction: row;
+            .logo {
+                flex:1;
+                display: flex;
+                align-items: center;
+            }
+            .links {
+                flex:1;
+            }
+            .social {
+                flex:1;
+                justify-content: flex-end;
+            }
+        }
+    }
+}
