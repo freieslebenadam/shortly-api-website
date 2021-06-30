@@ -1,43 +1,73 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import '../style/Shortener.scss'
 import Button from './Button'
 import ShortLinkItem from './ShortLinkItem'
 import {ShortContext} from '../ShortContext'
 
 function Shortener() {
-    const {shortenedLinks} = useContext(ShortContext)
+    const {shortenedLinks, shortenLink, fetching} = useContext(ShortContext)
     const [input, setInput] = useState("")
-    
-    let valid = false
+    const [valid, setValid] = useState(false)
+    const [validAction, setValidAction] = useState(false)
+    const [showValid, setShowValid] = useState(false)
+
+    const validRE = /^((http|https)(:\/\/))?[A-Za-z0-9\.]+\.[a-z0-9]+/
     const invalidClass = valid ? "" : "invalid"
-    const hiddenText = valid ? "hidden" : ""
+    const hiddenClass = valid ? "invalid-text hidden" : "invalid-text"
 
     const shortLinkItems = shortenedLinks.map(item => {
         return (
             <ShortLinkItem
-                key={item}
+                key={item.id}
                 originalLink={item.originalLink}
                 shortenedLink={item.shortenedLink}
             />
         )
     })
 
+    function validateInput() {
+        if (valid) {
+            setValidAction(true)
+            setShowValid(false)
+        } else {
+            setValidAction(false)
+            setShowValid(true)
+        }
+    }
+
+    useEffect(() => {
+        if (validAction) {
+            shortenLink(input)
+            setInput("")
+            setValidAction(false)
+        }
+    }, [validAction])
+
+    function handleClick() {
+        validateInput()
+    }
+
+    function handleChange(e) {
+        setInput(e.target.value)
+        setValid(validRE.test(e.target.value))
+    }
+
     return (
         <article id="shortener">
             <div className="container">
                 <form>
                     <input 
-                        className={`${invalidClass}`}
+                        className={showValid ? invalidClass : ""}
                         type="text"
                         placeholder="Shorten a link here..."
                         value={input}
-                        onChange={(e) => setInput(e.target.value)}
+                        onChange={(e) => handleChange(e)}
                     />
-                    <p className={`invalid-text ${hiddenText}`}>
+                    <p className={showValid ? hiddenClass : "invalid-text hidden"}>
                         Please enter a valid url
                     </p>
-                    <Button border="soft">
-                        Shorten It!
+                    <Button specialClass={fetching ? "inactive" : ""} onClick={fetching ? null : handleClick} border="soft">
+                        {fetching ? "Shortening..." : "Shorten It!"}
                     </Button>
                 </form>
                 <div className="link-list">

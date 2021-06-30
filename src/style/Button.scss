@@ -23,4 +23,14 @@ button.button {
     &.soft {
         border-radius: .5rem;
     }
+    &.purp {
+        background-color: $dark-violet;
+    }
+    &.inactive {
+        background-color: $gray;
+        &:hover {
+            filter: none;
+            cursor: default;
+        }
+    }
 }

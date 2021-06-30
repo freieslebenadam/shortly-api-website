@@ -1,24 +1,33 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 const ShortContext = React.createContext();
 
 function ShortContextProvider({children}) {
-    const [shortenedLinks, setShortenedLinks] = useState([
-        {originalLink:"https://www.frontendmentor.io/",shortenedLink:"https://rel.ink/k4lKyk"},
-        {originalLink:"https://www.frontendmentor.io/sdf186g51a68s4f1s65d1f98s1df65s1",shortenedLink:"https://rel.ink/k4lKyk"}
-    ])
+    const [fetching, setFetching] = useState(false)
+    const [shortenedLinks, setShortenedLinks] = useState([])
 
     function shortenLink(link) {
+        let latestId = Math.max.apply(Math, shortenedLinks.map(link => link.id))
+        if (latestId === -Infinity) {
+            latestId = 0
+        }
         let newShortenedLink = {
+            id: latestId + 1,
             originalLink: link,
             shortenedLink: ""
         }
-        setShortenedLinks(prev => [
-            ...prev,
-            newShortenedLink
-        ])
+        setFetching(true)
+        fetch(`https://api.shrtco.de/v2/shorten?url=${link}`)
+            .then(response => response.json())
+            .then(data => {
+                setFetching(false)
+                setShortenedLinks(prev => [
+                    ...prev,
+                    { ...newShortenedLink, shortenedLink: data.result.short_link}
+                ])
+            })
     }
     return (
-        <ShortContext.Provider value={{shortenLink, shortenedLinks}}>
+        <ShortContext.Provider value={{shortenLink, shortenedLinks, fetching}}>
             {children}
         </ShortContext.Provider>
     )
