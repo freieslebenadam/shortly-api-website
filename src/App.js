@@ -5,10 +5,11 @@ import Intro from './components/Intro'
 import Shortener from './components/Shortener'
 import Statistics from './components/Statistics'
 import Footer from './components/Footer'
+import {ShortContextProvider} from './ShortContext'
 
 function App() {
     return (
-        <>
+        <ShortContextProvider>
             <Header />
             <main>
                 <Intro />
@@ -16,7 +17,7 @@ function App() {
                 <Statistics />
             </main>
             <Footer />
-        </>
+        </ShortContextProvider>
     )
 }
 

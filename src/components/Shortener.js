@@ -1,13 +1,26 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import '../style/Shortener.scss'
 import Button from './Button'
 import ShortLinkItem from './ShortLinkItem'
+import {ShortContext} from '../ShortContext'
 
 function Shortener() {
+    const {shortenedLinks} = useContext(ShortContext)
     const [input, setInput] = useState("")
+    
     let valid = false
     const invalidClass = valid ? "" : "invalid"
     const hiddenText = valid ? "hidden" : ""
+
+    const shortLinkItems = shortenedLinks.map(item => {
+        return (
+            <ShortLinkItem
+                key={item}
+                originalLink={item.originalLink}
+                shortenedLink={item.shortenedLink}
+            />
+        )
+    })
 
     return (
         <article id="shortener">
@@ -28,14 +41,7 @@ function Shortener() {
                     </Button>
                 </form>
                 <div className="link-list">
-                    <ShortLinkItem 
-                        originalLink="https://www.frontendmentor.io/"
-                        shortenedLink="https://rel.ink/k4lKyk"
-                    />
-                    <ShortLinkItem 
-                        originalLink="https://www.frontendmentor.io/sdf186g51a68s4f1s65d1f98s1df65s1"
-                        shortenedLink="https://rel.ink/k4lKyk"
-                    />
+                    {shortLinkItems}
                 </div>
             </div>
         </article>
